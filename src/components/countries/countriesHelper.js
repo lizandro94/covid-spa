@@ -1,5 +1,6 @@
 import { Table } from 'antd';
-import dayjs from 'dayjs'
+import { Link } from "react-router-dom";
+import dayjs from 'dayjs';
 
 export const groupCountriesByContinent = countries => {
     const result = countries.reduce((list, currentCountry) => {
@@ -26,7 +27,7 @@ export const groupCountriesByContinent = countries => {
 
 export const getExpandedRowRender = (record) => {
     const columns = [
-        { title: 'Country', dataIndex: 'country', key: 'country' },
+        { title: 'Country', dataIndex: 'country', key: 'country',  render: (text, record) => <Link to={`/country/${record.country}`}>{text}</Link> },
         { title: 'Total cases', dataIndex: 'totalCases', key: 'totalCases', render: value => (value ?? 0).toLocaleString('en-US') },
         { title: 'Last update', dataIndex: 'time', key: 'time', render: value => dayjs(value).format('MM/DD/YYYY HH:MM') },
         { title: 'Population', dataIndex: 'population', key: 'population', render: value => (value ?? 0).toLocaleString('en-US') }

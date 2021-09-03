@@ -54,26 +54,23 @@ const Countries = () => {
     }
 
     return (
-        <>
-            <Card className="countries-card" title="COVID-19 Statistics ">
-                <Search placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
-                <br /><br />
-                <Table
-                    className="components-table-demo-nested"
-                    columns={columns}
-                    rowKey="name"
-                    pagination={false}
-                    dataSource={groupedCountries}
-                    expandable={{
-                        expandedRowRender: getExpandedRowRender,
-                        expandRowByClick: true,
-                        expandedRowKeys: expandedRowKeys,
-                        onExpand: onTableRowExpand
-                    }}
-                />
-            </Card>
-
-        </>
+        <Card className="countries-card" title="COVID-19 Statistics ">
+            <Search placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
+            <br /><br />
+            <Table
+                className="components-table-demo-nested"
+                columns={columns}
+                rowKey="name"
+                pagination={false}
+                dataSource={groupedCountries}
+                expandable={{
+                    expandedRowRender: getExpandedRowRender,
+                    expandRowByClick: true,
+                    expandedRowKeys: expandedRowKeys,
+                    onExpand: onTableRowExpand
+                }}
+            />
+        </Card>
     );
 };
 

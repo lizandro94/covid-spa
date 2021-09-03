@@ -8,6 +8,11 @@ const routes = [
         path: "/",
         component: loadable(() => import("./components/countries/Countries"), { fallback: <Loader /> }),
         exact: true
+    },
+    {
+        path: "/country/:country",
+        component: loadable(() => import("./components/countries/CountryDetail"), { fallback: <Loader /> }),
+        exact: true
     }
 ];
 
