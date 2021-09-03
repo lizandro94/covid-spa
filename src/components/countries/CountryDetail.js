@@ -58,7 +58,7 @@ const CountryDetail = () => {
                 <Descriptions.Item label=""><Statistic title="Total cases" value={countryData?.cases?.total} /></Descriptions.Item>
             </Descriptions>
             <Divider orientation="center">Active Cases</Divider>
-            <div style={{width: '40%', margin: 'auto'}}>
+            <div className="pie-container">
                 <Pie data={data} />
             </div>
         </Card>
