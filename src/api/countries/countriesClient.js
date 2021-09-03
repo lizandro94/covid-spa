@@ -1,5 +1,5 @@
 import baseApiClient from "../baseApiClient";
 
-export const getCountries = filterData => {
-    return baseApiClient.get('statistics', { params: filterData });
+export const getCountries = () => {
+    return baseApiClient.get('statistics');
 }

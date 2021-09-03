@@ -36,7 +36,7 @@ export const getExpandedRowRender = (record) => {
 };
 
 export const mapCountries = countries => {
-    const mappedCountries = countries.response.map(c => {
+    const mappedCountries = countries.map(c => {
         return {
             ...c,
             totalCases: c.cases.total
@@ -44,4 +44,16 @@ export const mapCountries = countries => {
     });
 
     return mappedCountries;
+}
+
+export const filterCountries = (countries, searchWord) => {
+    const filteredCountries = countries.response.filter(c => {
+        const country = (c.country ?? '').toUpperCase();
+        const continent = (c.continent ?? '').toUpperCase();
+        const searchCriteria = searchWord.toUpperCase();
+
+        return country.indexOf(searchCriteria) >= 0 || continent.indexOf(searchCriteria) >= 0;
+    });
+
+    return filteredCountries;
 }
