@@ -2,16 +2,29 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Input, Card } from 'antd';
 import { getCountries } from '../../api/countries/countriesClient';
 import { groupCountriesByContinent, getExpandedRowRender, mapCountries, filterCountries } from './countriesHelper';
+import useQuery from '../../hooks/useQuery';
 import './styles.scss';
 
 const Countries = () => {
     const { Search } = Input;
+    let query = useQuery();
+    const searchParam = query.get("search");
+
+    const [countries, setCountries] = useState([]);
     const [groupedCountries, setGroupedCountries] = useState([]);
-    const [searchWord, setSearchWord] = useState('');
+    const [searchWord, setSearchWord] = useState(searchParam ?? '');
     const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
     const getCountriesData = async () => {
         const countries = await getCountries();
+        setCountries(countries.response);
+    }
+
+    useEffect(() => {
+        getCountriesData();
+    }, [])
+
+    const fillGroupedCountries = () => {
         const filteredCountries = filterCountries(countries, searchWord);
 
         const mappedCountries = mapCountries(filteredCountries);
@@ -22,14 +35,11 @@ const Countries = () => {
         setExpandedRowKeys(expandedKeys);
     }
 
-    const memorizedCallback = useCallback(
-        getCountriesData,
-        [searchWord]
-    );
+    const memorizedFillGroupedCountries = useCallback(fillGroupedCountries, [countries, searchWord]);
 
     useEffect(() => {
-        memorizedCallback();
-    }, [memorizedCallback])
+        memorizedFillGroupedCountries();
+    }, [memorizedFillGroupedCountries])
 
 
     const columns = [
@@ -55,7 +65,7 @@ const Countries = () => {
 
     return (
         <Card className="countries-card" title="COVID-19 Statistics ">
-            <Search placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
+            <Search value={searchWord} placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
             <br /><br />
             <Table
                 className="components-table-demo-nested"

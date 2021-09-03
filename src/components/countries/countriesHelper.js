@@ -48,7 +48,7 @@ export const mapCountries = countries => {
 }
 
 export const filterCountries = (countries, searchWord) => {
-    const filteredCountries = countries.response.filter(c => {
+    const filteredCountries = countries.filter(c => {
         const country = (c.country ?? '').toUpperCase();
         const continent = (c.continent ?? '').toUpperCase();
         const searchCriteria = searchWord.toUpperCase();
