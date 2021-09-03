@@ -7,6 +7,7 @@ const baseApiClient = axios.create({
 
 export const registerDefaults = () => {
     baseApiClient.defaults.headers.common['x-rapidapi-host'] = `covid-193.p.rapidapi.com`;
+    // api-key should be empty for security in real projects
     baseApiClient.defaults.headers.common['x-rapidapi-key'] = `f2c6b9c8d1mshe9a115558dcf169p13b388jsn88e8804554eb`;
 }
 
