@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Input } from 'antd';
+import { Table, Input, Card } from 'antd';
 import { getCountries } from '../../api/countries/countriesClient';
 import { groupCountriesByContinent, getExpandedRowRender, mapCountries, filterCountries } from './countriesHelper';
+import './styles.scss';
 
 const Countries = () => {
     const { Search } = Input;
@@ -39,32 +40,39 @@ const Countries = () => {
         setSearchWord(value);
     }
 
+    const onChangeSearchInput = event => {
+        setSearchWord(event.target.value);
+    }
+
     const onTableRowExpand = (expanded, record) => {
         var keys = [];
-        if(expanded){
+        if (expanded) {
             keys.push(record.name);
         }
-    
+
         setExpandedRowKeys(keys);
     }
 
     return (
         <>
-            <Search placeholder="Search countries or continents" allowClear onSearch={onSearch} size="large"/>
-            <br/><br/>
-            <Table
-                className="components-table-demo-nested"
-                columns={columns}
-                rowKey="name"
-                pagination={false}
-                dataSource={groupedCountries}
-                expandable={{
-                    expandedRowRender: getExpandedRowRender,
-                    expandRowByClick: true,
-                    expandedRowKeys: expandedRowKeys,
-                    onExpand: onTableRowExpand
-                }}
-            />
+            <Card className="countries-card" title="COVID-19 Statistics ">
+                <Search placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
+                <br /><br />
+                <Table
+                    className="components-table-demo-nested"
+                    columns={columns}
+                    rowKey="name"
+                    pagination={false}
+                    dataSource={groupedCountries}
+                    expandable={{
+                        expandedRowRender: getExpandedRowRender,
+                        expandRowByClick: true,
+                        expandedRowKeys: expandedRowKeys,
+                        onExpand: onTableRowExpand
+                    }}
+                />
+            </Card>
+
         </>
     );
 };
