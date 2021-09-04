@@ -14,12 +14,15 @@ const CountryDetail = () => {
 
     const getCountry = async () => {
         var countryData = await getCountries({ country });
-        setCountryData(countryData.response[0]);
+
+        countryData.results > 0
+            ? setCountryData(countryData.response[0])
+            : history.push('/NotFound');
     }
 
     const memorizedCallback = useCallback(
         getCountry,
-        [country]
+        [country, history]
     );
 
     useEffect(() => {
