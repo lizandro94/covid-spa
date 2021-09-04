@@ -15,7 +15,6 @@ const CountryDetail = () => {
     const getCountry = async () => {
         var countryData = await getCountries({ country });
         setCountryData(countryData.response[0]);
-        console.log(countryData);
     }
 
     const memorizedCallback = useCallback(
