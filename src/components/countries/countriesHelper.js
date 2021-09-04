@@ -4,6 +4,10 @@ import dayjs from 'dayjs';
 import { errorNotif } from '../../utils/notifUtilities';
 
 export const groupCountriesByContinent = countries => {
+    if (!countries) {
+        return [];
+    }
+
     const result = countries.reduce((list, currentCountry) => {
         const currentCountryContinent = currentCountry.continent ?? 'No continent';
         let group = list.find(g => g.name === currentCountryContinent)
@@ -41,7 +45,7 @@ export const mapCountries = countries => {
     const mappedCountries = countries.map(c => {
         return {
             ...c,
-            totalCases: c.cases.total
+            totalCases: c?.cases?.total ?? 0
         }
     });
 
