@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Input, Card, Divider } from 'antd';
 import { getCountries } from '../../api/countries/countriesClient';
-import { groupCountriesByContinent, getExpandedRowRender, mapCountries, filterCountries } from './countriesHelper';
+import { groupCountriesByContinent, getExpandedRowRender, mapCountries, filterCountries, hasError, showError } from './countriesHelper';
 import useQuery from '../../hooks/useQuery';
+import { errorNotif } from '../../utils/notifUtilities';
 import './styles.scss';
 
 const Countries = () => {
@@ -16,13 +17,23 @@ const Countries = () => {
     const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
     const getCountriesData = async () => {
-        const countries = await getCountries();
-        setCountries(countries.response);
+        try {
+            const countries = await getCountries();
+            if (hasError(countries)) {
+                showError(countries);
+                return;
+            }
+            setCountries(countries.response);
+        } catch (error) {
+            errorNotif("I was not posible to get countries");
+        }
     }
 
+    const memorizedGetCountriesData = useCallback(getCountriesData, []);
+
     useEffect(() => {
-        getCountriesData();
-    }, [])
+        memorizedGetCountriesData();
+    }, [memorizedGetCountriesData])
 
     const fillGroupedCountries = () => {
         const filteredCountries = filterCountries(countries, searchWord);

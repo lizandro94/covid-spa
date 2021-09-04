@@ -1,6 +1,7 @@
 import { Table } from 'antd';
 import { Link } from "react-router-dom";
 import dayjs from 'dayjs';
+import { errorNotif } from '../../utils/notifUtilities';
 
 export const groupCountriesByContinent = countries => {
     const result = countries.reduce((list, currentCountry) => {
@@ -27,7 +28,7 @@ export const groupCountriesByContinent = countries => {
 
 export const getExpandedRowRender = (record) => {
     const columns = [
-        { title: 'Country', dataIndex: 'country', key: 'country',  render: (text, record) => <Link to={`/country/${record.country}`}>{text}</Link> },
+        { title: 'Country', dataIndex: 'country', key: 'country', render: (text, record) => <Link to={`/country/${record.country}`}>{text}</Link> },
         { title: 'Total cases', dataIndex: 'totalCases', key: 'totalCases', render: value => (value ?? 0).toLocaleString('en-US') },
         { title: 'Last update', dataIndex: 'time', key: 'time', render: value => dayjs(value).format('MM/DD/YYYY HH:MM') },
         { title: 'Population', dataIndex: 'population', key: 'population', render: value => (value ?? 0).toLocaleString('en-US') }
@@ -57,4 +58,14 @@ export const filterCountries = (countries, searchWord) => {
     });
 
     return filteredCountries;
+}
+
+export const hasError = countries => {
+    // When there are errors, errors prop is an object instead of an array
+    return !Array.isArray(countries.errors);
+}
+
+export const showError = countries => {
+    const errors = Object.values(countries.errors);
+    errorNotif(errors[0]);
 }
