@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Input, Card } from 'antd';
+import { Table, Input, Card, Divider } from 'antd';
 import { getCountries } from '../../api/countries/countriesClient';
 import { groupCountriesByContinent, getExpandedRowRender, mapCountries, filterCountries } from './countriesHelper';
 import useQuery from '../../hooks/useQuery';
@@ -66,7 +66,7 @@ const Countries = () => {
     return (
         <Card className="countries-card" title="COVID-19 Statistics ">
             <Search value={searchWord} placeholder="Search countries or continents" allowClear onChange={onChangeSearchInput} onSearch={onSearch} size="large" />
-            <br /><br />
+            <Divider />
             <Table
                 className="components-table-demo-nested"
                 columns={columns}
