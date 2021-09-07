@@ -15,3 +15,10 @@
         }
     }
 }
+
+.card-header {
+    display: flex;
+    span {
+        flex: 1;
+    }
+}

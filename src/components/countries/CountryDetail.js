@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Card, Descriptions, Statistic, Divider, Input } from 'antd';
+import { Card, Descriptions, Statistic, Divider, Input, Button } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useHistory, useParams } from "react-router-dom"
 import { getCountries } from '../../api/countries/countriesClient';
 import { errorNotif } from '../../utils/notifUtilities';
@@ -62,8 +63,18 @@ const CountryDetail = () => {
         history.push(`/?search=${value}`);
     }
 
+    const goHome = () => {
+        history.push('/');
+    }
+
+    const cardHeader =
+        (<div className="card-header">
+            <span>Country Details</span>
+            <Button type="primary" ghost shape="circle" icon={<ArrowLeftOutlined />} size="large" onClick={goHome} />
+        </div>)
+
     return (
-        <Card className="countries-card" title="Country details">
+        <Card className="countries-card" title={cardHeader}>
             <Search placeholder="Search countries or continents" allowClear onSearch={onSearch} size="large" />
             <Divider />
             <Descriptions title={<h1>{country}</h1>}>
